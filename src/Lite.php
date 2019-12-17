@@ -157,7 +157,7 @@ class Lite {
             $paramArray['SignatureMethod'] = $this->signatureMethod;
 		}
 		if (!isset($paramArray['Sign'])){
-            //$paramArray['Sign'] = $this->sign;
+            $paramArray['Sign'] = $this->sign;
 		}
 		if (!isset($paramArray['Language'])){
             $paramArray['Language'] = $this->language;
