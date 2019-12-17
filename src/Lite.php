@@ -1,5 +1,5 @@
 <?php
-namespace coomm\tencentsms;
+namespace Coomm\Tencentsms;
 
 
 class Lite {
