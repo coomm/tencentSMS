@@ -1,5 +1,5 @@
 <?php
-namespace PhalApi\tencentsms;
+namespace PhalApi\tencentqcloudsms;
 
 
 class Lite {
