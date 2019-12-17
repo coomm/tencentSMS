@@ -1,5 +1,5 @@
 {
-    "name": "phalapi/tencentqcloudsms",
+    "name": "coomm/tencentsms",
     "description": "PhalApi 2.x 扩展类库 - 腾讯云短信拓展",
     "keywords": [
         "phalapi", "tencent", "sms"
@@ -21,7 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-            "PhalApi\\tencentqcloudsms\\": "src"
+            "PhalApi\\tencentsms\\": "src"
         }
     } 
 }
