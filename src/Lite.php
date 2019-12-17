@@ -50,7 +50,7 @@ class Lite {
      * @param  string $requestPath   url路径
      * @return
      */
-    public function makeSignPlainText($requestParams,$requestMethod = 'GET', $requestHost,$requestPath = '/v2/index.php')
+    private function makeSignPlainText($requestParams,$requestMethod = 'GET', $requestHost,$requestPath = '/v2/index.php')
     {
 
         $url = $requestHost . $requestPath;
@@ -70,7 +70,7 @@ class Lite {
      * @param  string $requestMethod 请求方法
      * @return
      */
-    protected function buildParamStr($requestParams, $requestMethod = 'GET')
+    private function buildParamStr($requestParams, $requestMethod = 'GET')
     {
         $paramStr = '';
         ksort($requestParams);
@@ -129,7 +129,7 @@ class Lite {
      * @param  string $requestPath   url路径
      * @return
      */
-    public function send($paramArray, $requestMethod)
+    private function send($paramArray, $requestMethod)
     {
 
         if(!isset($paramArray['SecretId'])){
@@ -186,7 +186,7 @@ class Lite {
      * @param  string $method     请求方法
      * @return
      */
-    protected function sendRequest($url, $paramArray,$method = 'POST')
+    private function sendRequest($url, $paramArray,$method = 'POST')
     {
 
         $ch = curl_init();
