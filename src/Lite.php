@@ -23,19 +23,8 @@ class Lite {
 	private $language='zh-CN';
 	
     public function SendSms($params) {
-        try {
-			//模板Id
-			$req['TemplateID']=$params['templateID'];
-			//接收方手机号
-			$req['PhoneNumberSet.0']='+86'.$params['phoneNumberSet0'];//
-			//模板参数
-			$req['TemplateParamSet.0']=$params['code'];			
-			
-			if($params['templateID']=='496699'){
-				$req['TemplateParamSet.1']='1';
-			}
-			return $resp = $this->send($req,"POST");
-			
+        try {			
+			return $resp = $this->send($params,"POST");			
 		}
 		catch(Exception $e) {
 			echo $e;
@@ -112,7 +101,7 @@ class Lite {
     {
         $signMethodMap = ["HmacSHA1" => "sha1", "HmacSHA256" => "sha256"];
         if (!array_key_exists($signMethod, $signMethodMap)) {
-            throw new Exception("signMethod invalid", "signMethod only support (HmacSHA1, HmacSHA256)");
+            throw new Exception("signMethod only support (HmacSHA1, HmacSHA256)");
         }
         $signature = base64_encode(hash_hmac($signMethodMap[$signMethod], $signStr, $secretKey, true));		
 		return $signature;
