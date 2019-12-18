@@ -50,7 +50,7 @@ class Lite {
      * @param  string $requestPath   url路径
      * @return
      */
-    private function makeSignPlainText($requestParams,$requestMethod = 'GET', $requestHost,$requestPath = '/v2/index.php')
+    public function makeSignPlainText($requestParams,$requestMethod = 'GET', $requestHost,$requestPath = '/v2/index.php')
     {
 
         $url = $requestHost . $requestPath;
@@ -70,7 +70,7 @@ class Lite {
      * @param  string $requestMethod 请求方法
      * @return
      */
-    private function buildParamStr($requestParams, $requestMethod = 'GET')
+    protected function buildParamStr($requestParams, $requestMethod = 'GET')
     {
         $paramStr = '';
         ksort($requestParams);
@@ -129,7 +129,7 @@ class Lite {
      * @param  string $requestPath   url路径
      * @return
      */
-    private function send($paramArray, $requestMethod)
+    public function send($paramArray, $requestMethod)
     {
 
         if(!isset($paramArray['SecretId'])){
@@ -186,15 +186,25 @@ class Lite {
      * @param  string $method     请求方法
      * @return
      */
-    private function sendRequest($url, $paramArray,$method = 'POST')
+    protected function sendRequest($url, $paramArray,$method = 'POST')
     {
 
         $ch = curl_init();
-		$headers=array();
-        if ($method == 'POST')
+		$headers=array();        
+		
+		
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_TIMEOUT,60);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 0);
+
+        if (false !== strpos($url, "https")) {            
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,  FALSE);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,  FALSE);
+        }
+		if ($method == 'POST')
         {
             $paramArray = is_array( $paramArray ) ? http_build_query( $paramArray ) : $paramArray;
-            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POST, TRUE);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $paramArray);
 			
         }
@@ -202,25 +212,12 @@ class Lite {
         {
             $url .= '?' . http_build_query($paramArray);
         }
-		$headers["Host"] = $this->host;
-		$headers["Content-Type"] = "application/x-www-form-urlencoded";
-        curl_setopt($ch, CURLOPT_HEADER, $headers);
-		curl_setopt($ch, CURLOPT_VERBOSE, 0);
-		curl_setopt($ch, CURLINFO_HEADER_OUT, 0);
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_TIMEOUT,60);
-
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        if (false !== strpos($url, "https")) {
-            // 证书
-            // curl_setopt($ch,CURLOPT_CAINFO,"ca.crt");
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,  false);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,  false);
-        }
         $resultStr = curl_exec($ch);        
 
-        $result = json_decode($resultStr, true);
+        $result = json_decode($resultStr,true);
+		//var_dump($resultStr);
+		//var_dump($result);
+		//exit;
         if (!$result)
         {
             return $resultStr;
