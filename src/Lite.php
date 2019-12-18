@@ -195,8 +195,7 @@ class Lite {
 		
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_TIMEOUT,60);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 0);
-
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         if (false !== strpos($url, "https")) {            
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,  FALSE);
             curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,  FALSE);
@@ -213,11 +212,8 @@ class Lite {
             $url .= '?' . http_build_query($paramArray);
         }
         $resultStr = curl_exec($ch);        
-
-        $result = json_decode($resultStr,true);
-		//var_dump($resultStr);
-		//var_dump($result);
-		//exit;
+		$result = json_decode($resultStr, true);		
+		
         if (!$result)
         {
             return $resultStr;
