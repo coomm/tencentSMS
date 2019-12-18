@@ -44,8 +44,8 @@ $di->sms = function() {
 //模板参数
 $params['TemplateParamSet.0']='2046';
 //模板Id
-$params['templateID']='496702';
+$params['TemplateID']='496702';
 //接收方手机号
-$params['phoneNumberSet.0']='+8613800138000';
+$params['PhoneNumberSet.0']='+8613800138000';
 \PhalApi\DI()->sms->SendSms($params);
 ```
