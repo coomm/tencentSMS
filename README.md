@@ -42,10 +42,10 @@ $di->sms = function() {
 1. 发送模板短信
 ```php
 //模板参数
-$params['code']='2046';
+$params['TemplateParamSet.0']='2046';
 //模板Id
 $params['templateID']='496702';
 //接收方手机号
-$params['phoneNumberSet0']='18002595257';
+$params['phoneNumberSet.0']='+8613800138000';
 \PhalApi\DI()->sms->SendSms($params);
 ```
